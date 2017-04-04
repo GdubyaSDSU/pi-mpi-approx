@@ -37,12 +37,8 @@ int main (int argc, char* argv[])
       MPI_Finalize();
       return 0;
   }
-  /* run system commands */
-  //system("env");
 
   myarg = strtol(argv[1], NULL, 10);
-  /*printf("Hello From Processor: rank of  %d nprocs: %d;  CMDARG= %ld\n", 
-rank, nprocs,myarg);*/
     
   //Time to start setting up local calc
   a = (long double)(1.0/nprocs);
@@ -50,20 +46,16 @@ rank, nprocs,myarg);*/
   b = (long double)(1.0/nprocs);
   b = (long double) (rank + 1.0) * b; 
   subStep = (b - a) / myarg;
-  //subStep = 0.01;
-  /*printf("a= %f, b= %f, myarg= %d and subStep= %f\n", a, b, myarg, 
-      subStep);*/
  
   approx = (pi_int(a) + pi_int(b)) / 2.0;
-  //printf("approx=%f before loop\n", approx);
+
 
   for(i = 1; i<myarg; i++){
       x = a + i*subStep;
       approx += pi_int(x);
   }
-  //printf("approx=%f\n", approx);
+
   approx = subStep*approx;
-  //printf("approx=%f\n", approx);
 
   //Send each local approx to 0
   if(rank!=0){
